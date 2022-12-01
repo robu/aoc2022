@@ -1,0 +1,5 @@
+{
+    "dependencies": {
+        "aoc-toolbox": "^1.5.5"
+    }
+}
