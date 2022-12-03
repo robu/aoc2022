@@ -25,8 +25,8 @@ const aCode = 'a'.charCodeAt(0)
 const ACode = 'A'.charCodeAt(0)
 const prio = (char) => char.match(/[a-z]/) ? char.charCodeAt(0) - aCode + 1 : char.charCodeAt(0) - ACode + 27
 
-const part1 = () => splitLines(input).map(e => findMatchInAll(e[0], [e[1]])).map(x => prio(x)).reduce((s, p) => s + p, 0)
+const part1 = () => splitLines(input).map(e => findMatchInAll(e[0], [e[1]])).reduce((s, c) => s + prio(c), 0)
 
-const part2 = () => groupLines(input).map(grp => findMatchInAll(grp[0], [grp[1], grp[2]])).map(x => prio(x)).reduce((s, p) => s + p, 0)
+const part2 = () => groupLines(input).map(grp => findMatchInAll(grp[0], [grp[1], grp[2]])).reduce((s, c) => s + prio(c), 0)
 
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
