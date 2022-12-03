@@ -4,18 +4,8 @@ const input = fs.readFileSync('input.txt', { encoding: 'utf8' }).trim().split('\
 
 const splitLines = (lines) => lines.map(line => [line.substring(0, line.length / 2), line.substring(line.length / 2)])
 
-const groupLines = (lines, groupSize = 3) => {
-    let newArr = []
-    let group = []
-    for (i in lines) {
-        group.push(lines[i])
-        if (group.length === groupSize) {
-            newArr.push(group)
-            group = []
-        }
-    }
-    return newArr
-}
+// shout out to Gustaf Eriksson for this gem right here!
+const groupLines = (arr, size = 3) => [...Array(Math.ceil(arr.length / size))].map((_, i) => arr.slice(size * i, size + size * i))
 
 const matchInAll = (str, arr) => arr.reduce((result, s) => result && s.includes(str), true)
 
