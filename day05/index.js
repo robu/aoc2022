@@ -33,8 +33,20 @@ const doCommand = (stack, command) => {
     }
 }
 
+const doCommand2 = (stack, command) => {
+    let moveThese = stack[command.from-1].splice(-command.move)
+    stack[command.to - 1].push(...moveThese)
+}
+
 const part1 = () => {
     commands.forEach(cmd => doCommand(stack, cmd))
+    let result = []
+    stack.forEach(s => result.push(s[s.length - 1]))
+    return result.join('')
+}
+
+const part2 = () => {
+    commands.forEach(cmd => doCommand2(stack, cmd))
     let result = []
     stack.forEach(s => result.push(s[s.length - 1]))
     return result.join('')
