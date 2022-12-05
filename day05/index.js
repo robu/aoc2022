@@ -9,12 +9,10 @@ const parseStack = (lines) => {
     return stacks
 }
 
-const parseCommands = (lines) => {
-    return lines.map((line) => {
-        const matches = line.match(/move (\d+) from (\d+) to (\d+)/)
-        return { move: parseInt(matches[1]), from: parseInt(matches[2]), to: parseInt(matches[3]) }
-    })
-}
+const parseCommands = (lines) => lines.map((line) => {
+    const matches = line.match(/move (\d+) from (\d+) to (\d+)/)
+    return { move: parseInt(matches[1]), from: parseInt(matches[2]), to: parseInt(matches[3]) }
+})
 
 let stack = parseStack(inputAllLines.slice(0, inputAllLines.findIndex(l => l === '') - 1))
 let commands = parseCommands(inputAllLines.slice(inputAllLines.findIndex(l => l === '') + 1))
