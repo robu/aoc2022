@@ -5,13 +5,7 @@ const inputAllLines = fs.readFileSync('input.txt', { encoding: 'utf8' }).trimEnd
 const parseStack = (lines) => {
     const arrs = lines.map((line) => [...Array(Math.ceil(line.length / 4))].map((_, i) => line.substring(1 + i * 4, 2 + i * 4)))
     let stacks = [...Array(arrs[arrs.length - 1].length)].map(_ => [])
-    arrs.forEach((arr) => {
-        arr.map((c, i) => {
-            if (c != ' ') {
-                stacks[i].unshift(c)
-            }
-        })
-    })
+    arrs.forEach((arr) => arr.map((c, i) => c == ' ' ? false : stacks[i].unshift(c)))
     return stacks
 }
 
