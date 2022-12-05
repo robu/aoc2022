@@ -25,17 +25,15 @@ const parseCommands = (lines) => {
 let stack = parseStack(inputAllLines.slice(0, inputAllLines.findIndex(l => l === '') - 1))
 let commands = parseCommands(inputAllLines.slice(inputAllLines.findIndex(l => l === '') + 1))
 
-const doCommand = (stack, command) => stack[command.to - 1].push(...stack[command.from - 1].splice(-command.move).reverse())
-
-const doCommand2 = (stack, command) => stack[command.to - 1].push(...stack[command.from - 1].splice(-command.move))
+const doCommand = (stack, command, transform = x => x) => stack[command.to - 1].push(...transform(stack[command.from - 1].splice(-command.move)))
 
 const part1 = () => {
-    commands.forEach(cmd => doCommand(stack, cmd))
+    commands.forEach(cmd => doCommand(stack, cmd, x => x.reverse()))
     return stack.reduce(((res, s) => res + s[s.length - 1]), '')
 }
 
 const part2 = () => {
-    commands.forEach(cmd => doCommand2(stack, cmd))
+    commands.forEach(cmd => doCommand(stack, cmd))
     return stack.reduce(((res, s) => res + s[s.length - 1]), '')
 }
 
