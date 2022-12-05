@@ -7,9 +7,7 @@ const splitLines = (lines) => lines.map(line => [line.substring(0, line.length /
 // shout out to Gustaf Eriksson for this gem right here!
 const groupLines = (arr, size = 3) => [...Array(Math.ceil(arr.length / size))].map((_, i) => arr.slice(size * i, size + size * i))
 
-const matchInAll = (str, arr) => arr.reduce((result, s) => result && s.includes(str), true)
-
-const findMatchInAll = (str, strArr) => str.split('').find(c => (matchInAll(c, strArr)))
+const findMatchInAll = (str, strArr) => str.split('').find(c => strArr.reduce((result, s) => result && s.includes(c), true))
 
 const aCode = 'a'.charCodeAt(0)
 const ACode = 'A'.charCodeAt(0)
