@@ -8,7 +8,7 @@ const hasDuplicate = (arr) => {
     } else if (arr.slice(1).indexOf(arr[0]) >= 0) {
         return true
     } else {
-        return hasDuplicate(arr.slice(1))
+        return hasDuplicate(arr.slice(1)) // recursion FTW!
     }
 }
 
