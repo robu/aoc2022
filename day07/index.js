@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-const input = fs.readFileSync('input-robert.txt', { encoding: 'utf8' }).trim().split('\n')
+const input = fs.readFileSync('input.txt', { encoding: 'utf8' }).trim().split('\n')
 
 const cl = l => console.log(l)
 const jl = j => cl(JSON.stringify(j, null, 2))
@@ -130,11 +130,11 @@ const filterNodes = (tree, pred) => {
 
 const part1 = () => {
     let tree = buildTree(input)
-    jl({ tree })
+    //jl({ tree })
     let dirSizes = filterDirSizes(tree).filter(e => e.size <= 100000)
     //jl({ dirSizes })
 
-    return ""//dirSizes.reduce((s, v) => s + v.size, 0)
+    return dirSizes.reduce((s, v) => s + v.size, 0)
 }
 
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
