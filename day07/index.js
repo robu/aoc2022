@@ -72,20 +72,27 @@ const addFileToDir = (tree, path, fileLine) => {
     }
 }
 
-const calcSizes = (treeNode) => {
-    let size = 0
-    treeNode.entries.forEach((entry) => {
-        if (entry.type == 'file') {
-            size += entry.size
-        } else if (entry.type == 'dir') {
-            size += calcSizes(entry)
-        } else {
-            throw `unknown entry type: ${entry.type}`
-        }
-    })
-    treeNode.size = size
-    return size
+const calcSizes2 = (treeNode) => {
+    if (treeNode.type === 'dir') {
+        treeNode.size = treeNode.entries.reduce((s, e) => s + calcSizes2(e), 0)
+    }
+    return treeNode.size
 }
+
+// const calcSizes = (treeNode) => {
+//     let size = 0
+//     treeNode.entries.forEach((entry) => {
+//         if (entry.type == 'file') {
+//             size += entry.size
+//         } else if (entry.type == 'dir') {
+//             size += calcSizes(entry)
+//         } else {
+//             throw `unknown entry type: ${entry.type}`
+//         }
+//     })
+//     treeNode.size = size
+//     return size
+// }
 
 const buildTree = (lines) => {
     let dirTree = {
@@ -104,7 +111,7 @@ const buildTree = (lines) => {
             addFileToDir(dirTree, currentDir, line)
         }
     })
-    calcSizes(dirTree)
+    calcSizes2(dirTree)
     return dirTree
 }
 
