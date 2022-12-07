@@ -1,0 +1,61 @@
+{
+  "tree": {
+    "name": "/",
+    "type": "dir",
+    "size": 7400,
+    "entries": [
+      {
+        "name": "d1",
+        "type": "dir",
+        "size": 500,
+        "entries": [
+          {
+            "name": "b",
+            "type": "file",
+            "size": 200
+          },
+          {
+            "name": "c",
+            "type": "file",
+            "size": 300
+          }
+        ]
+      },
+      {
+        "name": "d2",
+        "type": "dir",
+        "size": 6900,
+        "entries": [
+          {
+            "name": "e",
+            "type": "file",
+            "size": 400
+          },
+          {
+            "name": "f",
+            "type": "file",
+            "size": 500
+          },
+          {
+            "name": "d3",
+            "type": "dir",
+            "size": 6000,
+            "entries": [
+              {
+                "name": "xxx",
+                "type": "file",
+                "size": 1000
+              },
+              {
+                "name": "yyy",
+                "type": "file",
+                "size": 5000
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}
+
