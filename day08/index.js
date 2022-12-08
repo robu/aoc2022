@@ -6,8 +6,8 @@ class Grid {
         this.confirmedViewable = new Set()
     }
 
-    toString() {
-        return this.data.map(r => r.join('')).join('\n')
+    toString(d = this.data) {
+        return d.map(r => r.join('')).join('\n')
     }
 
     toStringViewables() {
@@ -94,15 +94,106 @@ class Grid {
         this.findViewableRows()
         this.findViewableCols()
     }
+
+    getViewingDistanceN(fromRow, fromCol) {
+        const originHeight = this.getTreeHeight(fromRow, fromCol)
+        let distance = 0
+        for (let row = fromRow - 1; row >= 0; row--) {
+            if (this.getTreeHeight(row, fromCol) < originHeight) {
+                distance++
+            } else {
+                distance++
+                break;
+            }
+        }
+        return distance
+    }
+
+    getViewingDistanceS(fromRow, fromCol) {
+        const originHeight = this.getTreeHeight(fromRow, fromCol)
+        let distance = 0
+        for (let row = fromRow + 1; row < this.getNumRows(); row++) {
+            if (this.getTreeHeight(row, fromCol) < originHeight) {
+                distance++
+            } else {
+                distance++
+                break;
+            }
+        }
+        return distance
+    }
+
+    getViewingDistanceW(fromRow, fromCol) {
+        const originHeight = this.getTreeHeight(fromRow, fromCol)
+        let distance = 0
+        for (let col = fromCol - 1; col >= 0; col--) {
+            if (this.getTreeHeight(fromRow, col) < originHeight) {
+                distance++
+            } else {
+                distance++
+                break;
+            }
+        }
+        return distance
+    }
+
+    getViewingDistanceE(fromRow, fromCol) {
+        const originHeight = this.getTreeHeight(fromRow, fromCol)
+        let distance = 0
+        for (let col = fromCol + 1; col < this.getNumCols(); col++) {
+            if (this.getTreeHeight(fromRow, col) < originHeight) {
+                distance++
+            } else {
+                distance++
+                break;
+            }
+        }
+        return distance
+    }
+
+    getScenicScore(row, col) {
+        if (row == 0 || col == 0 || row == this.getNumRows() - 1 || col == this.getNumCols() - 1) {
+            return 0
+        } else {
+            return this.getViewingDistanceN(row, col) * this.getViewingDistanceE(row, col) * this.getViewingDistanceS(row, col) * this.getViewingDistanceW(row, col)
+        }
+    }
+
+    calcMaxScenicScores() {
+        let arr = []
+        let highest = -1
+        for (let row = 0; row < this.getNumRows(); row++) {
+            let r = []
+            for (let col = 0; col < this.getNumCols(); col++) {
+                let ss = this.getScenicScore(row,col)
+                if (ss > highest) {
+                    highest = ss
+                }
+                r.push(ss)
+            }
+            arr.push(r)
+        }
+//        console.log(arr.map(r => r.join(',')).join('\n'))
+        return highest
+    }
 }
 
 const part1 = () => {
     let grid = new Grid()
-//    console.log(grid.toString())
-//    console.log('\n\n')
+    //    console.log(grid.toString())
+    //    console.log('\n\n')
     grid.findViewables()
-//    console.log(grid.toStringViewables())
+    //    console.log(grid.toStringViewables())
     return grid.countViewables()
 }
+
+const part2 = () => {
+    let grid = new Grid()
+//    console.log(grid.toString())
+//    console.log('\n\n')
+    return grid.calcMaxScenicScores()
+}
+
+// incorrect: 5762400
 
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
