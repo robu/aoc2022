@@ -14,31 +14,24 @@ class Knot {
     recordVisitedPosition() { this.visitedPositions.push(`${this.row},${this.col}`) }
     countVisitedPositions() { return new Set(this.visitedPositions).size }
 
-    moveUp() { this.row--; this.recordVisitedPosition() }
-    moveUpRight() { this.row--; this.col++; this.recordVisitedPosition() }
-    moveRight() { this.col++; this.recordVisitedPosition() }
-    moveDownRight() { this.row++; this.col++; this.recordVisitedPosition() }
-    moveDown() { this.row++; this.recordVisitedPosition() }
-    moveDownLeft() { this.row++; this.col--; this.recordVisitedPosition() }
-    moveLeft() { this.col--; this.recordVisitedPosition() }
-    moveUpLeft() { this.row--; this.col--; this.recordVisitedPosition() }
     moveDirection(dir) {
         switch (dir) {
             case 'U':
-                this.moveUp()
+                this.row--
                 break;
             case 'R':
-                this.moveRight()
+                this.col++
                 break;
             case 'D':
-                this.moveDown()
+                this.row++
                 break;
             case 'L':
-                this.moveLeft()
+                this.col--
                 break;
             default:
                 throw `Unknown direction: ${dir}`
         }
+        this.recordVisitedPosition()
     }
     follow(otherKnot) {
         let rowDistance = Math.abs(this.row - otherKnot.row)
