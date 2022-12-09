@@ -71,4 +71,21 @@ const part1 = () => {
     return tailKnot.countVisitedPositions()
 }
 
+const part2 = () => {
+    let knots = []
+    for (let i = 0; i < 10; i++) {
+        knots.push(new Knot())
+    }
+    input.forEach(line => {
+        let [direction, steps] = line
+        for (let i = 0; i < steps; i++) {
+            knots[0].moveDirection(direction)
+            for (let k = 1; k < knots.length; k++) {
+                knots[k].follow(knots[k-1])
+            }
+        }
+    })
+    return knots[knots.length - 1].countVisitedPositions()
+}
+
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
