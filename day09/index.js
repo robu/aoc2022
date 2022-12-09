@@ -1,8 +1,5 @@
 const fs = require('fs')
 
-const input = fs.readFileSync('input.txt', { encoding: 'utf8' }).trim().split('\n').map(line => line.split(' '))
-input.forEach(line => line[1] = parseInt(line[1]))
-
 class Knot {
     constructor(startRow = 0, startCol = 0) {
         this.row = startRow
@@ -34,42 +31,25 @@ class Knot {
         this.recordVisitedPosition()
     }
     follow(otherKnot) {
-        let rowDistance = Math.abs(this.row - otherKnot.row)
-        let colDistance = Math.abs(this.col - otherKnot.col)
-        if (rowDistance <= 1 && colDistance <= 1) {
+        if (Math.abs(this.row - otherKnot.row) <= 1 && Math.abs(this.col - otherKnot.col) <= 1) {
             return // no need to move, we're close enough
         }
-        if (this.row === otherKnot.row) {
-            this.col += Math.sign(otherKnot.col - this.col)
-        } else if (this.col === otherKnot.col) {
+        if (this.row != otherKnot.row) {
             this.row += Math.sign(otherKnot.row - this.row)
-        } else {
+        } 
+        if (this.col != otherKnot.col) {
             this.col += Math.sign(otherKnot.col - this.col)
-            this.row += Math.sign(otherKnot.row - this.row)
         }
         this.recordVisitedPosition()
     }
 }
 
-const part1 = () => {
-    let headKnot = new Knot()
-    let tailKnot = new Knot()
-    input.forEach(line => {
-        let [direction, steps] = line
-        for (let i = 0; i < steps; i++) {
-            headKnot.moveDirection(direction)
-            tailKnot.follow(headKnot)
-        }
-    })
-    return tailKnot.countVisitedPositions()
-}
-
-const part2 = () => {
+const moveTheRope = (numKnots, lines) => {
     let knots = []
-    for (let i = 0; i < 10; i++) {
+    for (let i = 0; i < numKnots; i++) {
         knots.push(new Knot())
     }
-    input.forEach(line => {
+    lines.forEach(line => {
         let [direction, steps] = line
         for (let i = 0; i < steps; i++) {
             knots[0].moveDirection(direction)
@@ -78,7 +58,14 @@ const part2 = () => {
             }
         }
     })
-    return knots[knots.length - 1].countVisitedPositions()
+    return knots
 }
+
+const input = fs.readFileSync('input.txt', { encoding: 'utf8' }).trim().split('\n').map(line => line.split(' '))
+input.forEach(line => line[1] = parseInt(line[1]))
+
+const part1 = () => moveTheRope(2, input).pop().countVisitedPositions()
+
+const part2 = () => moveTheRope(10, input).pop().countVisitedPositions()
 
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
