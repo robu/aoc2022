@@ -32,5 +32,22 @@ const part1 = () => {
         220 * sequence[219].valueBefore
 }
 
+const part2 = () => {
+    let sequence = executionSequence(input, 1)
+    let crtLines = []
+    for (let crtLine = 0; crtLine < 6; crtLine++) {
+        crtLines.push([])
+        for (crtPixel = 0; crtPixel < 40; crtPixel++) {
+            let currentRegisterValue = sequence[crtLine * 40 + crtPixel].valueBefore
+            if (Math.abs(crtPixel-currentRegisterValue)<=1) {
+                crtLines[crtLine].push('#')
+            } else {
+                crtLines[crtLine].push('.')
+            }
+        }
+    }
+    return crtLines.map(line=>line.join('')).join('\n')
+}
+
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
 
