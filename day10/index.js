@@ -39,11 +39,7 @@ const part2 = () => {
         crtLines.push([])
         for (crtPixel = 0; crtPixel < 40; crtPixel++) {
             let currentRegisterValue = sequence[crtLine * 40 + crtPixel].valueBefore
-            if (Math.abs(crtPixel-currentRegisterValue)<=1) {
-                crtLines[crtLine].push('#')
-            } else {
-                crtLines[crtLine].push('.')
-            }
+            crtLines[crtLine].push(Math.abs(crtPixel-currentRegisterValue)<=1 ? '#':'.')
         }
     }
     return crtLines.map(line=>line.join('')).join('\n')
