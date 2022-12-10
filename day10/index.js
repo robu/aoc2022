@@ -22,27 +22,20 @@ const executionSequence = (lines, initialValue) => {
     return state
 }
 
-const part1 = () => {
-    let sequence = executionSequence(input, 1)
-    return 20 * sequence[19].valueBefore +
-        60 * sequence[59].valueBefore +
-        100 * sequence[99].valueBefore +
-        140 * sequence[139].valueBefore +
-        180 * sequence[179].valueBefore +
-        220 * sequence[219].valueBefore
-}
+const sequence = executionSequence(input, 1)
+
+const part1 = () => [20, 60, 100, 140, 180, 220].map(c => c * sequence[c - 1].valueBefore).reduce((s, v) => s + v)
 
 const part2 = () => {
-    let sequence = executionSequence(input, 1)
     let crtLines = []
     for (let crtLine = 0; crtLine < 6; crtLine++) {
         crtLines.push([])
         for (crtPixel = 0; crtPixel < 40; crtPixel++) {
             let currentRegisterValue = sequence[crtLine * 40 + crtPixel].valueBefore
-            crtLines[crtLine].push(Math.abs(crtPixel-currentRegisterValue)<=1 ? '#':'.')
+            crtLines[crtLine].push(Math.abs(crtPixel - currentRegisterValue) <= 1 ? '#' : '.')
         }
     }
-    return crtLines.map(line=>line.join('')).join('\n')
+    return crtLines.map(line => line.join('')).join('\n')
 }
 
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
