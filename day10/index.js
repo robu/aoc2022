@@ -9,8 +9,7 @@ const executionSequence = (lines, initialValue) => {
         if (line === 'noop') {
             state.push({ valueBefore: registerValue, valueAfter: registerValue, cmd: line })
         } else {
-            let matches = line.match(/^addx (.+)$/)
-            let delta = parseInt(matches[1])
+            let delta = parseInt(line.match(/^addx (.+)$/)[1])
             state.push({ valueBefore: registerValue, valueAfter: registerValue, cmd: line })
             state.push({ valueBefore: registerValue, valueAfter: registerValue + delta, cmd: line })
             registerValue += delta
