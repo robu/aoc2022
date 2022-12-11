@@ -67,15 +67,6 @@ class Monkey {
         this.items.forEach(item => this.inspectAndThrow(item, allMonkeys, modulo, doThird))
         this.items = []
     }
-
-    toString() {
-        return `Monkey ${this.monkeyIndex}:\n` +
-            `  Items: ${this.items.join(', ')}\n` +
-            `  Operation: ${this.operationStr}\n` +
-            `  Test: divisible by ${this.testDivisible}\n` +
-            `    if true: throw to monkey ${this.trueTarget}\n` +
-            `    if false: throw to monkey ${this.falseTarget}`
-    }
 }
 
 const monkeyRound = (monkeys, numRounds = 20, doThird = true) => {
