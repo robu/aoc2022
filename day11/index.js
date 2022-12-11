@@ -29,9 +29,7 @@ class Monkey {
             } else if (matches = line.trim().match(/Starting items: (.+)$/)) {
                 this.items = matches[1].split(',').map(x => parseInt(x.trim()))
             } else if (matches = line.trim().match(/Operation: (.+)$/)) {
-                this.operationStr = matches[1]
-                // console.log(this.operationStr)
-                let opMatches = this.operationStr.match(/new = old ([\+\*]) (.+)$/)
+                let opMatches = matches[1].match(/new = old ([\+\*]) (.+)$/)
                 this.operationOperator = opMatches[1]
                 this.operationParameter = opMatches[2]
             } else if (matches = line.trim().match(/Test: divisible by (\d+)$/)) {
@@ -48,9 +46,7 @@ class Monkey {
 
     getInspectCount() { return this.inspectCount }
 
-    receiveItem(worryLevel) {
-        this.items.push(worryLevel)
-    }
+    receiveItem(worryLevel) { this.items.push(worryLevel) }
 
     inspectAndThrow(item, monkeys, modulo, doThird = true) {
         this.inspectCount++
@@ -59,7 +55,6 @@ class Monkey {
         let newWorryLevel = op(item, opVal) % modulo
         if (doThird) { newWorryLevel = Math.floor(newWorryLevel / 3) }
         let target = newWorryLevel % this.testDivisible === 0 ? this.trueTarget : this.falseTarget
-        //console.log(`monkey ${this.monkeyIndex}, item ${item}, newLevel: ${newWorryLevel}, target: ${target}`)
         monkeys[target].receiveItem(newWorryLevel)
     }
 
@@ -70,23 +65,16 @@ class Monkey {
 }
 
 const monkeyRound = (monkeys, numRounds = 20, doThird = true) => {
-    const modulo = monkeys.reduce((p,m)=>p*m.testDivisible, 1)
+    const modulo = monkeys.reduce((p, m) => p * m.testDivisible, 1)
     for (let round = 0; round < numRounds; round++) {
         monkeys.forEach(monkey => monkey.doTurn(monkeys, modulo, doThird))
     }
+    return monkeys
 }
 
-const part1 = () => {
-    let monkeys = sections(input).map(s => new Monkey(s))
-    monkeyRound(monkeys)
-    return monkeys.map(m => m.getInspectCount()).sort((x, y) => y - x).slice(0, 2).reduce((p, f) => p * f)
-}
+const part1 = () => monkeyRound(sections(input).map(s => new Monkey(s))).map(m => m.getInspectCount()).sort((x, y) => y - x).slice(0, 2).reduce((p, f) => p * f)
 
-const part2 = () => {
-    let monkeys = sections(input).map(s => new Monkey(s))
-    monkeyRound(monkeys, 10000, false)
-    return monkeys.map(m => m.getInspectCount()).sort((x, y) => y - x).slice(0, 2).reduce((p, f) => p * f)
-}
+const part2 = () => monkeyRound(sections(input).map(s => new Monkey(s)), 10000, false).map(m => m.getInspectCount()).sort((x, y) => y - x).slice(0, 2).reduce((p, f) => p * f)
 
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
 
