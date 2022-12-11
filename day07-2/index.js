@@ -13,8 +13,6 @@ const doCdCommand = (arg, path) => {
     return path
 }
 
-const pathFromArray = (arr) => arr.length == 0 ? '' : arr.length == 1 ? '/' : `/${arr.slice(1).join('/')}`
-
 const findOrCreateNode = (tree, path) => {
     let node = tree
     if (path.length > 0) {
