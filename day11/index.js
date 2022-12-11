@@ -88,7 +88,5 @@ const part2 = () => {
     return monkeys.map(m => m.getInspectCount()).sort((x, y) => y - x).slice(0, 2).reduce((p, f) => p * f)
 }
 
-// part2 32327320179 incorrect
-
 console.log((process.env.part || "part1") == "part1" ? part1() : part2())
 
